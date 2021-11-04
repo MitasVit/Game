@@ -1,0 +1,2 @@
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\Debug\DirectX app.exe
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\Debug\DirectX app.pdb

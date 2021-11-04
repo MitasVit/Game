@@ -1,0 +1,39 @@
+﻿  Main.cpp
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(690,20): warning C4553: ==: Výsledek výrazu se nepoužívá; nebylo vaším záměrem =?
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(691,21): warning C4553: ==: Výsledek výrazu se nepoužívá; nebylo vaším záměrem =?
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(692,20): warning C4553: ==: Výsledek výrazu se nepoužívá; nebylo vaším záměrem =?
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(693,21): warning C4553: ==: Výsledek výrazu se nepoužívá; nebylo vaším záměrem =?
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(784,10): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(785,13): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(786,13): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(804,10): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(805,13): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(806,13): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(166,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(167,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(168,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(169,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(170,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(171,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(179,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(180,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(181,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(182,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(183,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(184,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(189,15): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(190,13): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(191,13): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(192,13): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(193,13): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(194,13): warning C4244: =: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(206,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(207,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(208,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(209,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(210,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\trojuhelnik_d2d1.h(211,13): warning C4244: =: int se převádí na FLOAT; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\Main.cpp(491,79): warning C4244: argument: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\Main.cpp(491,65): warning C4244: argument: FLOAT se převádí na int; může dojít ke ztrátě dat.
+D:\C++PROGRAMUJU\Visual studio c++\DirectX app\figure_d2d1.h(316): warning C4715: ParseFigurePart: ne všechny cesty k ovládacím prvkům vrací hodnotu
+  DirectX app.vcxproj -> D:\C++PROGRAMUJU\Visual studio c++\DirectX app\Debug\DirectX app.exe
