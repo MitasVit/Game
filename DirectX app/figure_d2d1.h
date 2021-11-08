@@ -43,6 +43,17 @@ struct TrojBody2 {
 	int By;
 	int Cx;
 	int Cy;
+	TrojBody2() {
+
+	}
+	TrojBody2(int _Ax, int _Ay, int _Bx, int _By, int _Cx, int _Cy){
+		Ax = _Ax;
+		Ay = _Ay;
+		Bx = _Bx;
+		By = _By;
+		Cx = _Cx;
+		Cy = _Cy;
+	}
 };
 
 
@@ -313,6 +324,7 @@ FigurePart ParseFigurePart(string fig_full) {
 	else if (id_type == TRIANGLE_RIGHT_ANGLE_COPYMOVE) {
 
 	}
+			return tmp;
 }
 
 int GetFigurePartsCount(Figure fig) {
@@ -549,7 +561,7 @@ struct colision_detect {
 	bool axis1_x;/* INFO: FOR COLISION OBJ1, viz definitions(PLUS,MINUS)*/
 	bool axis1_y;/* INFO: FOR COLISION OBJ1, viz definitions(PLUS,MINUS)*/
 };
-
+/*
 colision_detect Colision(FigurePart fig1, FigurePart fig2) {
 	colision_detect test;
 	int copy1x[MAX], copy2x[MAX], copy1y[MAX], copy2y[MAX];
@@ -565,10 +577,10 @@ colision_detect Colision(FigurePart fig1, FigurePart fig2) {
 	for (int i = 0; i < fig2.num_detect_points_y; i++) {
 		copy2y[i] = fig2.detect_points_y[i];
 	}
-	/*sort(copy1x[0], copy1x[MAX]);
+	sort(copy1x[0], copy1x[MAX]);
 	sort(copy1y[0], copy1y[MAX]);
 	sort(copy2x[0], copy2x[MAX]);
-	sort(copy2y[0], copy2y[MAX]);*/
+	sort(copy2y[0], copy2y[MAX]);
 	for (int i = 0; i < fig2.num_detect_points_x; i++) {
 		int tmp = Find_number(copy2x, MAX, copy1x[i]);
 		if (tmp != copy2x[MAX]) {
@@ -620,7 +632,7 @@ colision_detect Colision(FigurePart fig1, FigurePart fig2) {
 	return test;
 }
 
-
+*/
 
 int FindMax(int p[], int n) {
 		int i;
@@ -651,46 +663,66 @@ int Find_number(int p[], int n, int x)
 	return -1;                  /* hledaný prvek v poli není */
 }
 
+D2D1_COLOR_F GetColorFromChooseColorDialog() {
+	CHOOSECOLOR cc;                 // common dialog box structure 
+	static COLORREF acrCustClr[16]; // array of custom colors 
+	HWND hwnd = NULL;                      // owner window
+	static DWORD rgbCurrent;        // initial color selection
+
+	ZeroMemory(&cc, sizeof(cc));
+	cc.lStructSize = sizeof(cc);
+	cc.hwndOwner = hwnd;
+	cc.lpCustColors = (LPDWORD)acrCustClr;
+	cc.rgbResult = rgbCurrent;
+	cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+	D2D1_COLOR_F color;
+	if (ChooseColor(&cc) == TRUE)
+	{
+		//MessageBox(NULL, L"Do you want to use this color as outline? (No->will be used as fill color)", L"Info", MB_YESNO);
+
+		rgbCurrent = cc.rgbResult;
+		color.r = GetRValue(cc.rgbResult);
+		color.g = GetGValue(cc.rgbResult);
+		color.b = GetBValue(cc.rgbResult);
+		color.a = 255;//plná
+
+
+	}
+	return color;
+}
+
+COLORREF GetColorFromChooseColorDialog2() {
+	CHOOSECOLOR cc;                 // common dialog box structure 
+	static COLORREF acrCustClr[16]; // array of custom colors 
+	HWND hwnd = NULL;                      // owner window
+	static DWORD rgbCurrent;        // initial color selection
+
+	ZeroMemory(&cc, sizeof(cc));
+	cc.lStructSize = sizeof(cc);
+	cc.hwndOwner = hwnd;
+	cc.lpCustColors = (LPDWORD)acrCustClr;
+	cc.rgbResult = rgbCurrent;
+	cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+	if (ChooseColor(&cc) == TRUE)
+	{
+		MessageBox(NULL, L"Do you want to use this color as outline? (No->will be used as fill color)", L"Info", MB_YESNO);
+
+
+		rgbCurrent = cc.rgbResult;
+	}
+	return rgbCurrent;
+}
 class Objekt{
 public:
-	COLORREF SetColorFromChooseColorDialog() {
-		CHOOSECOLOR cc;                 // common dialog box structure 
-		static COLORREF acrCustClr[16]; // array of custom colors 
-		HWND hwnd = NULL;                      // owner window
-		static DWORD rgbCurrent;        // initial color selection
-
-		ZeroMemory(&cc, sizeof(cc));
-		cc.lStructSize = sizeof(cc);
-		cc.hwndOwner = hwnd;
-		cc.lpCustColors = (LPDWORD)acrCustClr;
-		cc.rgbResult = rgbCurrent;
-		cc.Flags = CC_FULLOPEN | CC_RGBINIT;
-
-		if (ChooseColor(&cc) == TRUE)
-		{
-			MessageBox(NULL, L"Do you want to use this color as outline? (No->will be used as fill color)", L"Info", MB_YESNO);
-			D2D1_COLOR_F color;
-
-			color.r = GetRValue(acrCustClr[0]);
-			color.g = GetGValue(acrCustClr[0]);
-			color.b = GetBValue(acrCustClr[0]);
-			color.a = 255;//plná
-			m_target->CreateSolidColorBrush(color, &m_brush);
-
-			figp.out_color = acrCustClr[0];
-
-			rgbCurrent = cc.rgbResult;
-		}
-		return cc.rgbResult;
-	}
+	
 	void LoadFromFigurePart(FigurePart fig) {
 		figp = fig;
 	}
 	void SetMovable(bool _move_plus_x, bool _move_minus_x, bool _move_plus_y, bool _move_minus_y) {
-		figp.move_plus_x == _move_plus_x;
-		figp.move_minus_x == _move_minus_x;
-		figp.move_plus_y == _move_plus_y;
-		figp.move_minus_y == _move_minus_y;
+		figp.move_plus_x = _move_plus_x;
+		figp.move_minus_x = _move_minus_x;
+		figp.move_plus_y = _move_plus_y;
+		figp.move_minus_y = _move_minus_y;
 	}
 	void SetColisionPoints(int _detect_points_x[MAX], int _detect_points_y[MAX]) {
 		for (int i = 0; i < MAX; i++) {
@@ -801,6 +833,7 @@ D2D1_POINT_2F RotatePrimka2(D2D1_POINT_2F point1, D2D1_POINT_2F point2, float al
 		psi = atan((_Bx /_By) * (PI / 180));
 	}
 	float fi = psi + alfa;
+#pragma warning(disable, 4244)
 	float r = sqrt(pow(_Bx, 2) + pow(_By, 2));
 	float finX = (r * cos(fi * (PI / 180))) + rozdil_x;
 	float finY = (r * sin(fi * (PI / 180))) + rozdil_y;

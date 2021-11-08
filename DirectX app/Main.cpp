@@ -13,8 +13,25 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
+#pragma comment(lib,"dwrite.lib")
+#pragma comment(lib,"d2d1.lib")
+#pragma comment(lib, "Shlwapi.lib")
+
+
+#pragma comment(linker,"\"/manifestdependency:type='win32' \
+name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
+processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
+#pragma warning(disable:4100)
+
+
 #include "trojuhelnik_d2d1.h"
 #include "Grid_d2d1.h"
+#include "collision_d2d1.h"
+#include "extern/colorpick.hpp"
+
+
+
 //#include "bitmap.h"
 
 template<class Interface>
@@ -45,6 +62,26 @@ inline void SafeRelease(
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 #endif
+/*
+void D2D1PointInit(D2D1_POINT_2F* p, float x, float y) {
+    p->x = x;
+    p->y = y;
+}
+*/
+D2D1_POINT_2F AB, AB2;//triangle points
+
+int speed= 10;//move speed
+int max_speed = 200;//max move speed
+
+FLOAT dx=50, dy= 50;//dpi, x,y
+bool _key = true;
+
+Collision_area troj_col, rect_col, key_col;
+ID2D1SolidColorBrush* m_BlackBrush;
+ID2D1SolidColorBrush* m_GreenBrush;
+
+float COLORPICK::ScaleDPI = 96.0f;
+COLORPICK prx;
 
 class DemoApp
 {
@@ -95,8 +132,6 @@ private:
     ID2D1Factory* m_pDirect2dFactory;
     ID2D1HwndRenderTarget* m_pRenderTarget;
     ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
-    ID2D1SolidColorBrush* m_BlackBrush;
-    ID2D1SolidColorBrush* m_GreenBrush;
     ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
     IWICImagingFactory* pIWICFactory;
     ID2D1EllipseGeometry* m_pEllipseGeometry;
@@ -110,6 +145,24 @@ DemoApp::DemoApp() :
     m_pLightSlateGrayBrush(NULL),
     m_pCornflowerBlueBrush(NULL)
 {
+    AB.x = 200;
+    AB.y = 200;
+    AB2.x = 400;
+    AB2.y = 200;
+    troj_col.x = 200;
+    troj_col.y = 0;
+    troj_col.width = 200;
+    troj_col.height = 200;
+
+    key_col.x = 980;
+    key_col.y = 580;
+    key_col.height = 70;
+    key_col.width = 70;
+
+    rect_col.x = 570;
+    rect_col.y = 570;
+    rect_col.width = 70;
+    rect_col.height = 220;
 }
 
 
@@ -421,7 +474,112 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             result = 0;
             wasHandled = true;
             break;
+            
+            case WM_KEYDOWN:
+            {
 
+
+                 if ((GetAsyncKeyState(0x27) & 0x8000 ) && (GetAsyncKeyState(0x28) & 0x8000)) {
+                    //key-right and key-down pressed
+                    AB.x = AB.x + speed;
+                    AB2.x = AB2.x + speed;
+                    AB.y = AB.y + speed;
+                    AB2.y = AB2.y + speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if ((GetAsyncKeyState(0x27) & 0x8000) && (GetAsyncKeyState(0x26) & 0x8000)) {
+                    //key-right and key-up pressed
+                    AB.x = AB.x + speed;
+                    AB2.x = AB2.x + speed;
+                    AB.y = AB.y - speed;
+                    AB2.y = AB2.y - speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if ((GetAsyncKeyState(0x25) & 0x8000) && (GetAsyncKeyState(0x28) & 0x8000)) {
+                    //key-left and key-down pressed
+                    AB.x = AB.x - speed;
+                    AB2.x = AB2.x - speed;
+                    AB.y = AB.y + speed;
+                    AB2.y = AB2.y + speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if ((GetAsyncKeyState(0x25) & 0x8000) && (GetAsyncKeyState(0x26) & 0x8000)) {
+                    //key-left and key-up pressed
+                    AB.x = AB.x - speed;
+                    AB2.x = AB2.x - speed;
+                    AB.y = AB.y - speed;
+                    AB2.y = AB2.y - speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }else if (GetAsyncKeyState(0x27) & 0x8000) {
+                    //key-right pressed
+                    AB.x = AB.x + speed;
+                    AB2.x = AB2.x + speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if (GetAsyncKeyState(0x25) & 0x8000) {
+                    //key-left pressed
+                    AB.x = AB.x - speed;
+                    AB2.x = AB2.x - speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if (GetAsyncKeyState(0x28) & 0x8000) {
+                    //key-down pressed
+                    AB.y = AB.y + speed;
+                    AB2.y = AB2.y + speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                }
+                else if (GetAsyncKeyState(0x26) & 0x8000) {
+                    //key-up pressed
+                    AB.y = AB.y - speed;
+                    AB2.y = AB2.y - speed;
+                    SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                else if ((GetAsyncKeyState(0x43) & 0x8000) && (GetAsyncKeyState(VK_SHIFT) & 0x8000)) {
+                     D2D1_COLOR_F c1 = {};// = { 1.0f,0,0,1.0f };
+                     prx.Show(0, c1);
+                     m_GreenBrush->SetColor(c1);
+                     SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                else if (GetAsyncKeyState(0x43) & 0x8000) {
+                     D2D1_COLOR_F col = GetColorFromChooseColorDialog();
+                     m_GreenBrush->SetColor(col);
+                     SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                else if ((GetAsyncKeyState(VK_SUBTRACT) & 0x8000) && (GetAsyncKeyState(0x53) & 0x8000)) {
+                     //  MessageBox(NULL, L"SUB", L"SUB", MB_OK);
+                     if (speed != 1) {
+                         speed--;
+                     }
+                 }
+                else if ((GetAsyncKeyState(VK_ADD) & 0x8000) && (GetAsyncKeyState(0x53) & 0x8000)) {
+                     //  MessageBox(NULL, L"ADD", L"ADD", MB_OK);
+                     if (speed != max_speed) {
+                         speed++;
+                     }
+                 }
+                else if (GetAsyncKeyState(VK_SUBTRACT) & 0x8000) {
+                     dx = dx - 1;
+                     dy = dy - 1;
+                     SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                else if (GetAsyncKeyState(VK_ADD) & 0x8000) {
+                     dy = dy + 1;
+                     dx = dx + 1;
+                     SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                 troj_col.x = AB.x;//200
+                 troj_col.y = AB.y - 200;//200
+                 troj_col.width = 200;//200
+                 troj_col.height = 200;//200
+                 if (Collision(troj_col, key_col)) {
+                     _key = false;
+                     SendMessage(hwnd, WM_PAINT, 0, 0);
+                 }
+                 if (Collision(troj_col, rect_col)) {
+                     MessageBox(NULL, L"Collision detected!", L"Info", MB_OK);
+                 }
+
+            }break;
             case WM_PAINT:
             {
                 pDemoApp->OnRender();
@@ -481,43 +639,66 @@ HRESULT DemoApp::OnRender()
         int height = static_cast<int>(rtSize.height);
 
 
-        D2D1_RECT_F rectangle1 = D2D1::RectF(
-            rtSize.width / 2 - 50.0f,
-            rtSize.height / 2 - 50.0f,
-            rtSize.width / 2 + 50.0f,
-            rtSize.height / 2 + 50.0f
-        );
+        m_pRenderTarget->SetDpi(dx, dy);
 
-        DrawGrid(m_pRenderTarget, m_pCornflowerBlueBrush, rtSize.width, rtSize.height);
-        TrojBody2 tr2;
-        tr2.Ax = 200;
-        tr2.Ay = 200;
-        tr2.Bx = 200;
-        tr2.By = 400;
-        tr2.Cx = 400;
-        tr2.Cy = 400;
-        Trojuhelnik troj(m_pRenderTarget, m_pCornflowerBlueBrush, tr2, 55);
+        D2D1_RECT_F rectangle1 = D2D1::RectF(
+            600,
+            600,
+            650,
+            800
+        );
+        D2D1_RECT_F key = D2D1::RectF(
+            1000,
+            600,
+            1050,
+            650
+        );
+        if (_key) {
+            m_pRenderTarget->FillRectangle(key, m_pCornflowerBlueBrush);
+        }
+        m_pRenderTarget->DrawRectangle(rectangle1, m_BlackBrush);
+        /*    AB.x = 200;
+    AB.y = 200;
+    AB2.x = 200;
+    AB2.y = 400;*/
+        TrojBody2 troj2;
+        troj2.Ax = AB.x;//200
+        troj2.Ay = AB.y;//200
+        troj2.Bx = AB2.x;//400
+        troj2.By = AB2.y;//200
+        troj2.Cx = AB.x;//200
+        troj2.Cy = AB2.y-200;//0
+        Trojuhelnik troj(m_pRenderTarget, m_GreenBrush,troj2, 55);
+        troj.Move2(20, 20, false);
+        troj.Draw();
+       /* m_pRenderTarget->DrawLine(AB, AB2, m_BlackBrush);
+
+      /*  DrawGrid(m_pRenderTarget, m_pCornflowerBlueBrush, rtSize.width, rtSize.height);
+       
         D2D1_COLOR_F color;
         color.r = 255;
         color.g = 0;
         color.b = 0;
         color.a = 255;
         m_pLightSlateGrayBrush->SetColor(color);
-        troj.SetBrush(m_pLightSlateGrayBrush);
+        troj.SetBrush(m_pLightSlateGrayBrush);*/
+
        // troj.Draw();
      //   troj.Rotate(35);
         
-        D2D1_POINT_2F point1, point2;
+      /*  D2D1_POINT_2F point1, point2;
         point1.x = 200;
         point1.y = 200;
         point2.x = 400;
-        point2.y = 200;
-        D2D1_POINT_2F test = RotatePrimka2(point1, point2, 0);
-         m_pRenderTarget->DrawLine(point1, point2, m_GreenBrush);
+        point2.y = 200;*/
+
+        /*
+        D2D1_POINT_2F test = RotatePrimka2(AB, AB2, 0);
+         m_pRenderTarget->DrawLine(AB, AB2, m_GreenBrush);
          for (float i = 0; i < 360;i = i++) {
-             test = RotatePrimka2(point1, point2, i);
-             m_pRenderTarget->DrawLine(point1, test, m_GreenBrush);
-         }
+             test = RotatePrimka2(AB, AB2, i);
+             m_pRenderTarget->DrawLine(AB, test, m_GreenBrush);
+         }*/
          
        // troj.Erase();
         hr = m_pRenderTarget->EndDraw();

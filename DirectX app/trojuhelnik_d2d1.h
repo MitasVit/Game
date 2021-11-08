@@ -149,6 +149,24 @@ public:
 		figp.Cx = NULL;
 		figp.Cy = NULL;
 	}
+	TrojBody2 GetBody2() {
+		TrojBody2 tmp;
+		tmp.Ax = figp.Ax;
+		tmp.Ay = figp.Ay;
+		tmp.Bx = figp.Bx;
+		tmp.By = figp.By;
+		tmp.Cx = figp.Cx;
+		tmp.Cy = figp.Cy;
+		return tmp;
+	}
+	void SetBody2(TrojBody2 troj) {
+		figp.Ax = troj.Ax;
+		figp.Ay = troj.Ay;
+		figp.Bx = troj.Bx;
+		figp.By = troj.By;
+		figp.Cx = troj.Cx;
+		figp.Cy = troj.Cy;
+	}
 	void Draw() {
 		if (figp.out_color == 0) {
 			figp.out_color = RGB(0, 0, 0);
